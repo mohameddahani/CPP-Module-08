@@ -6,7 +6,7 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 15:00:47 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/05 17:20:06 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/06 16:06:29 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typename T::const_iterator easyfind(const T &container, const int num){
     if (it == container.end()){
         throw std::runtime_error("Value not found");
     }
+
     return it;
 }
 

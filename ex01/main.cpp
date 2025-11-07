@@ -6,7 +6,7 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 20:54:18 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/06 12:11:05 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/06 16:06:46 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main()
         std::cout << sp.shortestSpan() << std::endl;
         std::cout << sp.longestSpan() << std::endl;
     } catch(const std::exception& e){
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
     }
 
     return 0;

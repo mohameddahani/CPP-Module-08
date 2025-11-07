@@ -6,7 +6,7 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 08:41:39 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/06 12:07:49 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/06 18:32:55 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int Span::shortestSpan(){
             rangeBetweenNumbers.push_back(abs(this->vector[i] - this->vector[j]));
         }
     }
+    // * sort the ranges
     std::sort(rangeBetweenNumbers.begin(), rangeBetweenNumbers.end());
     
     return *rangeBetweenNumbers.begin();
@@ -198,6 +199,7 @@ int Span::longestSpan(){
             rangeBetweenNumbers.push_back(abs(this->vector[i] - this->vector[j]));
         }
     }
+    // * sort the ranges
     std::sort(rangeBetweenNumbers.begin(), rangeBetweenNumbers.end());
     
     return rangeBetweenNumbers[rangeBetweenNumbers.size() - 1];

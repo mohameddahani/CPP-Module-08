@@ -1,4 +1,4 @@
-NAME =  find
+NAME = find
 
 SRCS =  main.cpp
 
