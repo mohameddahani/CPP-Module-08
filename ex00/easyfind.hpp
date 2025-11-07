@@ -6,7 +6,7 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 15:00:47 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/06 16:06:29 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/07 18:46:46 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // * Includes
 #include <iostream>
-#include <bits/stdc++.h>
+#include <algorithm>
 
 // * Functions
 template<typename T>

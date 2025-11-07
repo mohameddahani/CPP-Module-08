@@ -6,116 +6,129 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 08:41:39 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/06 18:32:55 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/07 18:46:18 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
 // * ──────────────────────────────────────────────────────────────
-         // ?   📘 C++ SEQUENCE CONTAINERS COMPARISON TABLE
+// ?   ⚙️ C++ STL — SHORT REFERENCE GUIDE
 // * ──────────────────────────────────────────────────────────────
-// * 
-// ! Container:        array
-// * ────────────────────────────────────────────
-// * Memory Structure:  Static contiguous block (fixed size)
-// * Access Speed:      O(1) (very fast)
-// * Add/Remove End:    Not possible (fixed size)
-// * Add/Remove Begin:  Not possible
-// * Add/Remove Middle: Not possible
-// * Capacity:          Fixed at creation
-// * Iterators:         Random access
-// * Use Case:          When size is known and never changes
-// * 
-// * ────────────────────────────────────────────
-// * 
-// ! Container:        vector
-// * ────────────────────────────────────────────
-// * Memory Structure:  Dynamic contiguous array (heap)
-// * Access Speed:      O(1)
-// * Add/Remove End:    O(1) amortized (very fast)
-// * Add/Remove Begin:  O(n)
-// * Add/Remove Middle: O(n)
-// * Capacity:          Dynamic (auto-expands, usually x2)
-// * Iterators:         Random access
-// * Use Case:          When fast random access and adding at end only
-// * 
-// * ────────────────────────────────────────────
-// * 
-// ! Container:        deque
-// * ────────────────────────────────────────────
-// * Memory Structure:  Multiple contiguous blocks (with pointer map)
-// * Access Speed:      O(1) (slightly slower than vector)
-// * Add/Remove End:    O(1)
-// * Add/Remove Begin:  O(1)
-// * Add/Remove Middle: O(n)
-// * Capacity:          Dynamic
-// * Iterators:         Random access
-// * Use Case:          When you need fast insertion/removal at both ends
-// * 
-// * ────────────────────────────────────────────
-// * 
-// ! Container:        list
-// * ────────────────────────────────────────────
-// * Memory Structure:  Doubly linked list (each node has prev/next)
-// * Access Speed:      O(n)
-// * Add/Remove End:    O(1)
-// * Add/Remove Begin:  O(1)
-// * Add/Remove Middle: O(1) (via iterator)
-// * Capacity:          No fixed capacity (nodes allocated dynamically)
-// * Iterators:         Bidirectional
-// * Use Case:          When you frequently insert/remove in the middle
-// * 
-// * ────────────────────────────────────────────
-// * 
-// ! Container:        forward_list
-// * ────────────────────────────────────────────
-// * Memory Structure:  Singly linked list (one pointer to next)
-// * Access Speed:      O(n)
-// * Add/Remove End:    Not possible directly
-// * Add/Remove Begin:  O(1)
-// * Add/Remove Middle: O(1) (after known element)
-// * Capacity:          No fixed capacity (dynamic allocation)
-// * Iterators:         Forward only
-// * Use Case:          When memory efficiency matters and only forward traversal needed
-// * 
-// * ────────────────────────────────────────────
-// * 
-                 // ?    🧠 MEMORY LAYOUT SUMMARY
-// * ────────────────────────────────────────────
-// * array         → contiguous (stack)
-// * vector        → contiguous (heap)
-// * deque         → segmented blocks (non-contiguous)
-// * list          → scattered nodes (heap, doubly linked)
-// * forward_list  → scattered nodes (heap, singly linked)
-// * 
-// * ────────────────────────────────────────────
-// * 
-                 // ?    ⚙️ BIG O COMPLEXITY
-// * ────────────────────────────────────────────
-// * Operation          array   vector  deque   list   forward_list
-// * ────────────────────────────────────────────
-// * Access by index     O(1)    O(1)    O(1)   O(n)        O(n)
-// * Insert at end        -      O(1)    O(1)   O(1)          -
-// * Insert at front       -     O(n)    O(1)   O(1)        O(1)
-// * Insert in middle      -     O(n)    O(n)   O(1)*       O(1)*
-// * Delete at end         -     O(1)    O(1)   O(1)          -
-// * Delete at front       -     O(n)    O(1)   O(1)        O(1)
-// * Delete in middle      -     O(n)    O(n)   O(1)*       O(1)*
-// * (* requires iterator)
-// * 
-// * ────────────────────────────────────────────
-// * 
-                 // ?    💡 QUICK GUIDE
-// * ────────────────────────────────────────────
-// * Goal                                   Best Container
-// * ────────────────────────────────────────────
-// * Fast random access                     vector or array
-// * Insert/remove at both ends             deque
-// * Insert/remove in the middle often      list
-// * Low memory and simple forward traversal forward_list
-// * Fixed size, compile-time known         array
-// * ────────────────────────────────────────────
+//
+// 🔹 STL OVERVIEW
+// ────────────────────────────────────────────
+// STL (Standard Template Library) provides reusable, efficient tools
+// to store, access, and manipulate data.
+//
+// Components:
+//  1️⃣ Containers  → store data
+//  2️⃣ Iterators   → traverse data
+//  3️⃣ Algorithms  → manipulate data
+//  4️⃣ Functors    → custom operations
+//  5️⃣ Allocators  → memory management
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 CONTAINERS (DATA STRUCTURES)
+// ────────────────────────────────────────────
+//
+// ▓ 1️⃣ Sequence Containers → store elements in linear order
+// ------------------------------------------------------------
+// array<T, N>       → fixed size, fast O(1) access
+// vector<T>         → dynamic array, O(1) access, O(1) push_back
+// deque<T>          → fast insert/remove at both ends
+// list<T>           → doubly linked list (O(1) insert/remove)
+// forward_list<T>   → singly linked list (O(1) insert/remove front)
+//
+// ▓ 2️⃣ Associative Containers → sorted key-based (Red-Black Tree)
+// ------------------------------------------------------------
+// set<T>            → unique sorted values
+// multiset<T>       → sorted values, duplicates allowed
+// map<K, V>         → key-value, unique keys
+// multimap<K, V>    → key-value, duplicate keys
+//
+// ▓ 3️⃣ Unordered Associative Containers → hash table based
+// ------------------------------------------------------------
+// unordered_set<T>        → unique hashed values
+// unordered_multiset<T>   → hashed values, duplicates allowed
+// unordered_map<K, V>     → key-value, hashed, unique keys
+// unordered_multimap<K, V>→ key-value, hashed, duplicate keys
+//
+// ▓ 4️⃣ Container Adapters → restricted interfaces
+// ------------------------------------------------------------
+// stack<T>          → LIFO (default: deque)
+// queue<T>          → FIFO (default: deque)
+// priority_queue<T> → max-heap (default: vector)
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 ITERATORS
+// ────────────────────────────────────────────
+// Objects similar to pointers used to traverse containers.
+//
+// Types:
+//  - Input          (read-only, single-pass, e.g., istream_iterator)
+//  - Output         (write-only, single-pass, e.g., ostream_iterator)
+//  - Forward        (multi-pass, e.g., forward_list)
+//  - Bidirectional  (e.g., list, set, map)
+//  - Random Access  (e.g., vector, deque, array)
+//
+// Example:
+// ```cpp
+// for (auto it = v.begin(); it != v.end(); ++it)
+//     std::cout << *it << " ";
+// ```
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 ALGORITHMS
+// ────────────────────────────────────────────
+// Generic functions in <algorithm> working via iterators.
+//
+// Common examples:
+//  - sort(), reverse(), find(), count(), accumulate(), unique()
+//
+// Example:
+// ```cpp
+// std::sort(v.begin(), v.end());
+// std::reverse(v.begin(), v.end());
+// ```
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 COMPLEXITY OVERVIEW
+// ────────────────────────────────────────────
+// Container        | Access | Insert End | Insert Mid | Ordered | Hash
+// ────────────────────────────────────────────
+// array            | O(1)   | N/A        | N/A        | No      | No
+// vector           | O(1)   | O(1)*      | O(n)       | No      | No
+// deque            | O(1)   | O(1)       | O(n)       | No      | No
+// list             | O(n)   | O(1)       | O(1)*      | No      | No
+// set/map          | O(log n)| O(log n)  | O(log n)   | Yes     | No
+// unordered_map    | O(1)*  | O(1)*      | O(1)*      | No      | Yes
+// (* = average)
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 QUICK RECOMMENDATION
+// ────────────────────────────────────────────
+// Goal                               → Container
+// ────────────────────────────────────────────
+// Fast random access                 → vector / array
+// Insert/remove both ends            → deque
+// Many middle insertions/removals    → list
+// Unique sorted elements             → set
+// Key-value sorted                   → map
+// Fast key lookup (unordered)        → unordered_map
+// Stack behavior                     → stack
+// Queue behavior                     → queue
+// Priority-based access              → priority_queue
+//
+// * ──────────────────────────────────────────────
+
+
+
 
 
 // * Default constructor
@@ -150,8 +163,6 @@ Span &Span::operator=(const Span &other){
 Span::~Span(){
     std::cout << "Span is destroyed" << std::endl;
 }
-
-// * Setters & Getters
 
 // * Methods
 void Span::addNumber(int number){
