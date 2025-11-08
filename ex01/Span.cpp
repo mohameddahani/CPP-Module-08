@@ -6,128 +6,206 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 08:41:39 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/07 18:46:18 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/08 09:24:45 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
 // * ──────────────────────────────────────────────────────────────
-// ?   ⚙️ C++ STL — SHORT REFERENCE GUIDE
+// ?    ⚙️ C++ STANDARD TEMPLATE LIBRARY (STL) — COMPLETE GUIDE
 // * ──────────────────────────────────────────────────────────────
 //
-// 🔹 STL OVERVIEW
+// 🧠 INTRODUCTION
 // ────────────────────────────────────────────
-// STL (Standard Template Library) provides reusable, efficient tools
-// to store, access, and manipulate data.
+// The STL (Standard Template Library) is a powerful set of C++ template classes
+// that provides ready-to-use and efficient tools to manage and manipulate data.
 //
-// Components:
-//  1️⃣ Containers  → store data
-//  2️⃣ Iterators   → traverse data
-//  3️⃣ Algorithms  → manipulate data
-//  4️⃣ Functors    → custom operations
-//  5️⃣ Allocators  → memory management
+// It includes:
+//  1️⃣ Containers  → Data structures that store data
+//  2️⃣ Iterators   → Objects that point to container elements
+//  3️⃣ Algorithms  → Functions that perform operations on containers
+//  4️⃣ Function Objects (Functors) → Objects used like functions
+//  5️⃣ Allocators  → Handle memory management for containers
+//
+// STL is built using templates, meaning it works with any data type (int, string, custom class, etc.)
 //
 // * ──────────────────────────────────────────────
 //
-// 🔹 CONTAINERS (DATA STRUCTURES)
+// 🔹 1️⃣ CONTAINERS — “Where Data Lives”
+// ────────────────────────────────────────────
+// A container is a class template that stores a collection of elements (objects or data).
+// Each container type has a different internal memory structure and access strategy.
+//
+// Containers are divided into 4 main categories:
+//
+//   ▪ Sequence Containers
+//   ▪ Associative Containers
+//   ▪ Unordered Associative Containers
+//   ▪ Container Adapters
+//
 // ────────────────────────────────────────────
 //
-// ▓ 1️⃣ Sequence Containers → store elements in linear order
-// ------------------------------------------------------------
-// array<T, N>       → fixed size, fast O(1) access
-// vector<T>         → dynamic array, O(1) access, O(1) push_back
-// deque<T>          → fast insert/remove at both ends
-// list<T>           → doubly linked list (O(1) insert/remove)
-// forward_list<T>   → singly linked list (O(1) insert/remove front)
+// ▓ SEQUENCE CONTAINERS (Linear Storage)
+// --------------------------------------
+// Elements are stored in a specific linear sequence (order of insertion matters).
 //
-// ▓ 2️⃣ Associative Containers → sorted key-based (Red-Black Tree)
-// ------------------------------------------------------------
-// set<T>            → unique sorted values
-// multiset<T>       → sorted values, duplicates allowed
-// map<K, V>         → key-value, unique keys
-// multimap<K, V>    → key-value, duplicate keys
+// * std::array<T, N>        → Fixed-size array (stack memory)
+// * std::vector<T>          → Dynamic array (contiguous, grows automatically)
+// * std::deque<T>           → Double-ended queue (fast at both ends)
+// * std::list<T>            → Doubly linked list
+// * std::forward_list<T>    → Singly linked list (less memory, forward-only)
 //
-// ▓ 3️⃣ Unordered Associative Containers → hash table based
-// ------------------------------------------------------------
-// unordered_set<T>        → unique hashed values
-// unordered_multiset<T>   → hashed values, duplicates allowed
-// unordered_map<K, V>     → key-value, hashed, unique keys
-// unordered_multimap<K, V>→ key-value, hashed, duplicate keys
+// 🧩 Use when: element order matters or frequent insertion/removal occurs.
 //
-// ▓ 4️⃣ Container Adapters → restricted interfaces
-// ------------------------------------------------------------
-// stack<T>          → LIFO (default: deque)
-// queue<T>          → FIFO (default: deque)
-// priority_queue<T> → max-heap (default: vector)
+// ────────────────────────────────────────────
+//
+// ▓ ASSOCIATIVE CONTAINERS (Ordered Key-Based Storage)
+// ----------------------------------------------------
+// Store elements sorted by key using balanced binary trees (Red-Black Tree).
+//
+// * std::set<T>             → Unique, sorted values
+// * std::multiset<T>        → Sorted values, allows duplicates
+// * std::map<Key, T>        → Key-value pairs with unique keys
+// * std::multimap<Key, T>   → Key-value pairs allowing duplicate keys
+//
+// 🧩 Use when: you need automatic sorting and no duplicate keys (or controlled duplicates).
+//
+// ────────────────────────────────────────────
+//
+// ▓ UNORDERED ASSOCIATIVE CONTAINERS (Hash Table Based)
+// -----------------------------------------------------
+// Store elements as key-value pairs but **not sorted**. Instead, they use hash functions.
+//
+// * std::unordered_set<T>         → Unique elements, hashed
+// * std::unordered_multiset<T>    → Hashed elements, allows duplicates
+// * std::unordered_map<Key, T>    → Key-value pairs, unique keys
+// * std::unordered_multimap<Key, T> → Key-value pairs, duplicate keys
+//
+// 🧩 Use when: you need **fast lookups (O(1) average)** and don’t care about order.
+//
+// ────────────────────────────────────────────
+//
+// ▓ CONTAINER ADAPTERS (Restricted Interfaces)
+// --------------------------------------------
+// These are wrappers that provide a simplified interface on top of existing containers.
+//
+// * std::stack<T>                 → LIFO (Last In, First Out) [based on deque by default]
+// * std::queue<T>                 → FIFO (First In, First Out) [based on deque by default]
+// * std::priority_queue<T>        → Elements ordered by priority (max-heap by default)
+//
+// 🧩 Use when: you need specific behaviors (stack, queue, or heap) without worrying about internals.
 //
 // * ──────────────────────────────────────────────
 //
-// 🔹 ITERATORS
+// 🔹 2️⃣ ITERATORS — “The Connectors”
 // ────────────────────────────────────────────
-// Objects similar to pointers used to traverse containers.
+// Iterators act like **pointers** that can traverse elements of a container.
+// They generalize access to container elements, allowing algorithms to work with any container type.
 //
-// Types:
-//  - Input          (read-only, single-pass, e.g., istream_iterator)
-//  - Output         (write-only, single-pass, e.g., ostream_iterator)
-//  - Forward        (multi-pass, e.g., forward_list)
-//  - Bidirectional  (e.g., list, set, map)
-//  - Random Access  (e.g., vector, deque, array)
+// Types of iterators:
+//   ▪ Input Iterator        → Read data only once
+//   ▪ Output Iterator       → Write data only once
+//   ▪ Forward Iterator      → Traverse forward (like in forward_list)
+//   ▪ Bidirectional Iterator→ Move forward/backward (like in list, set, map)
+//   ▪ Random Access Iterator→ Jump to any element (like in vector, deque, array)
 //
 // Example:
 // ```cpp
-// for (auto it = v.begin(); it != v.end(); ++it)
-//     std::cout << *it << " ";
+// std::vector<int> v = {10, 20, 30};
+// std::vector<int>::iterator it = v.begin();
+// while (it != v.end()) {
+//     std::cout << *it << " "; // Access element
+//     ++it; // Move to next
+// }
 // ```
+//
+// 🧩 Iterators make STL algorithms work with any container.
 //
 // * ──────────────────────────────────────────────
 //
-// 🔹 ALGORITHMS
+// 🔹 3️⃣ ALGORITHMS — “The Workers”
 // ────────────────────────────────────────────
-// Generic functions in <algorithm> working via iterators.
+// STL algorithms are a set of functions that perform operations on containers via iterators.
+// Defined in <algorithm> and <numeric>.
 //
-// Common examples:
-//  - sort(), reverse(), find(), count(), accumulate(), unique()
+// Examples:
+//  ▪ sort(begin, end)             → Sorts elements in ascending order
+//  ▪ reverse(begin, end)          → Reverses order
+//  ▪ find(begin, end, value)      → Finds first occurrence
+//  ▪ count(begin, end, value)     → Counts occurrences
+//  ▪ accumulate(begin, end, 0)    → Sums up all elements
+//  ▪ unique(begin, end)           → Removes consecutive duplicates
+//  ▪ lower_bound(begin, end, val) → First element ≥ val (sorted containers)
+//
+// 🧩 Algorithms use iterators, not container-specific functions —
+//     that’s why they can work with any container type.
+//
+// * ──────────────────────────────────────────────
+//
+// 🔹 4️⃣ FUNCTION OBJECTS (FUNCTORS)
+// ────────────────────────────────────────────
+// A **functor** is a class that acts like a function by overloading operator().
+// They are often used in algorithms to define custom behavior.
 //
 // Example:
 // ```cpp
-// std::sort(v.begin(), v.end());
-// std::reverse(v.begin(), v.end());
+// struct Compare {
+//     bool operator()(int a, int b) const { return a > b; }
+// };
+// std::sort(v.begin(), v.end(), Compare()); // Sort descending
 // ```
 //
-// * ──────────────────────────────────────────────
-//
-// 🔹 COMPLEXITY OVERVIEW
-// ────────────────────────────────────────────
-// Container        | Access | Insert End | Insert Mid | Ordered | Hash
-// ────────────────────────────────────────────
-// array            | O(1)   | N/A        | N/A        | No      | No
-// vector           | O(1)   | O(1)*      | O(n)       | No      | No
-// deque            | O(1)   | O(1)       | O(n)       | No      | No
-// list             | O(n)   | O(1)       | O(1)*      | No      | No
-// set/map          | O(log n)| O(log n)  | O(log n)   | Yes     | No
-// unordered_map    | O(1)*  | O(1)*      | O(1)*      | No      | Yes
-// (* = average)
+// 🧩 STL provides predefined functors like std::less, std::greater, etc.
 //
 // * ──────────────────────────────────────────────
 //
-// 🔹 QUICK RECOMMENDATION
+// 🔹 5️⃣ ALLOCATORS
 // ────────────────────────────────────────────
-// Goal                               → Container
-// ────────────────────────────────────────────
-// Fast random access                 → vector / array
-// Insert/remove both ends            → deque
-// Many middle insertions/removals    → list
-// Unique sorted elements             → set
-// Key-value sorted                   → map
-// Fast key lookup (unordered)        → unordered_map
-// Stack behavior                     → stack
-// Queue behavior                     → queue
-// Priority-based access              → priority_queue
+// Allocators handle memory allocation for containers (default is std::allocator).
+// They abstract low-level memory management to make containers more flexible and efficient.
+//
+// You rarely need to modify them manually.
 //
 // * ──────────────────────────────────────────────
-
-
+//
+// ⚙️ PERFORMANCE & MEMORY SUMMARY
+// ────────────────────────────────────────────
+// Container         | Memory Layout          | Random Access | Insert/Erase (ends) | Insert/Erase (middle)
+// ────────────────────────────────────────────
+// array             | contiguous (stack)     | O(1)          | N/A                 | N/A
+// vector            | contiguous (heap)      | O(1)          | O(1)/O(n)           | O(n)
+// deque             | segmented (heap)       | O(1)          | O(1)/O(1)           | O(n)
+// list              | scattered (heap)       | O(n)          | O(1)/O(1)           | O(1)*
+// forward_list      | scattered (heap)       | O(n)          | O(1) front only     | O(1)*
+// set/map           | tree (balanced BST)    | O(log n)      | O(log n)            | O(log n)
+// unordered_set/map | hash table (buckets)   | O(1)* avg     | O(1)* avg           | O(1)* avg
+// (* requires iterator)
+//
+// * ──────────────────────────────────────────────
+//
+// ✅ QUICK REFERENCE — CHOOSE THE RIGHT CONTAINER
+// ────────────────────────────────────────────
+// Goal                                  → Best Container
+// ────────────────────────────────────────────
+// Fast random access                    → vector / array
+// Insert/remove both ends               → deque
+// Frequent middle insertions/removals   → list
+// Unique sorted elements                → set
+// Key-value with order                  → map
+// Fast lookup (unordered)               → unordered_map
+// LIFO stack behavior                   → stack
+// FIFO queue behavior                   → queue
+// Priority ordering                     → priority_queue
+//
+// * ──────────────────────────────────────────────
+//
+// 🔸 Summary:
+// STL = Containers + Iterators + Algorithms + Functors + Allocators
+// They work together as a generic, reusable framework that gives
+// both **performance** and **flexibility** in modern C++.
+//
+// * ──────────────────────────────────────────────────────────────
 
 
 
