@@ -6,7 +6,7 @@
 /*   By: mdahani <mdahani@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 18:34:27 by mdahani           #+#    #+#             */
-/*   Updated: 2025/11/07 11:03:32 by mdahani          ###   ########.fr       */
+/*   Updated: 2025/11/08 09:58:18 by mdahani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,16 @@ int main()
     // 5
     // 3
     // 5
+
+    std::cout << "==========================" << std::endl;
+
+    // ! Check for constant container
+    const MutantStack<int> mstack_const(mstack);
+    MutantStack<int>::const_iterator it2 = mstack_const.begin();
+    MutantStack<int>::const_iterator ite2 = mstack_const.end();
+    for (size_t i = 0; (it2 != ite2) && i < 4; i++){
+        std::cout << mstack_const.top() << std::endl;
+    }
 
     return 0;
 }
